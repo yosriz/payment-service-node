@@ -1,11 +1,14 @@
 import {Server} from "http";
 import {PaymentApp} from "./app";
+import {container} from "./ioc/appModules";
+import {TYPES} from "./ioc/types";
 
 type ServerError = Error & { syscall: string; code: string; };
 
-const app = new PaymentApp();
+const app = container.get<PaymentApp>(TYPES.PaymentApp);
 const logger = app.logger;
 const config = app.config;
+
 app.init().then(() => {
     const express = app.createExpress();
     const server = express.listen(config.port);
