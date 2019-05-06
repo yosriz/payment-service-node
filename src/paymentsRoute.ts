@@ -7,7 +7,7 @@ import {TYPES} from "./ioc/types";
 @injectable()
 export class PaymentsRoute {
 
-   constructor(@inject(TYPES.Logger) private readonly logger: Logger) {
+    constructor(@inject(TYPES.Logger) private readonly logger: Logger) {
         this.logger = logger;
     }
 

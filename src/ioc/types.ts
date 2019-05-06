@@ -8,4 +8,6 @@ export const TYPES = {
     PaymentsRoute: Symbol.for("PaymentsRoute"),
     AppInfoRoute: Symbol.for("AppInfoRoute"),
     MessageBroker: Symbol.for("MessageBroker"),
+    Metrics: Symbol.for("Metrics"),
+
 };

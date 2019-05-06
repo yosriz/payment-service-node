@@ -9,6 +9,11 @@ export interface Config {
     channels_salt? : string;
     channels_count? : number;
     loggers?: LogTarget[];
+    statsd: {
+		host: string;
+		port: number;
+	};
+    redis_url: string;
 }
 
 export module Config {
