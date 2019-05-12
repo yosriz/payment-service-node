@@ -1,13 +1,13 @@
-import * as express from 'express'
-import {Config} from "./config";
-import {Logger} from "./logging";
-import {GeneralErrorMiddleware, NotFoundMiddleware} from "./middleware";
-import {WalletRoute} from "./walletRoute";
-import {PaymentsRoute} from "./paymentsRoute";
-import {WatchersRoute} from "./watchersRoute";
-import {AppInfoRoute} from "./appInfoRoute";
-import {inject, injectable} from "inversify";
-import {TYPES} from "./ioc/types";
+import * as express from 'express';
+import { Config } from "./config";
+import { Logger } from "./logging";
+import { GeneralErrorMiddleware, NotFoundMiddleware } from "./middleware";
+import { WalletRoute } from "./walletRoute";
+import { PaymentsRoute } from "./paymentsRoute";
+import { WatchersRoute } from "./watchersRoute";
+import { AppInfoRoute } from "./appInfoRoute";
+import { inject, injectable } from "inversify";
+import { TYPES } from "./ioc/types";
 
 @injectable()
 export class PaymentApp {

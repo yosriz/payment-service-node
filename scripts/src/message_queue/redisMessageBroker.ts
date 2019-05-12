@@ -1,8 +1,7 @@
-import {injectable} from "inversify";
-import {WalletRoute} from "../walletRoute";
-import {MessageBroker} from "./messageBroker";
-import {promisify} from "util";
-import {RedisClient} from "redis";
+import { WalletRoute } from "../walletRoute";
+import { MessageBroker } from "./messageBroker";
+import { promisify } from "util";
+import { RedisClient } from "redis";
 
 type RedisAsyncFunctions = {
     get(key: string): Promise<string>;

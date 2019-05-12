@@ -1,7 +1,7 @@
 import * as express from 'express';
-import {Request, Response} from "express-serve-static-core";
-import {ClientError} from "./errors";
-import {Logger} from "./logging";
+import { Request, Response } from "express-serve-static-core";
+import { ClientError } from "./errors";
+import { Logger } from "./logging";
 
 export interface MiddlewareHandler {
     handler(): express.RequestHandler | express.ErrorRequestHandler;

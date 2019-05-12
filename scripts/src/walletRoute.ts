@@ -1,11 +1,11 @@
 import * as express from "express";
-import {Request, Response} from "express-serve-static-core";
-import {Logger} from "./logging";
+import { Request, Response } from "express-serve-static-core";
+import { Logger } from "./logging";
+import { inject, injectable } from "inversify";
+import { TYPES } from "./ioc/types";
+import { MessageBroker } from "./message_queue/messageBroker";
+import { Metrics } from "./metrics/metrics";
 import CreateWalletRequest = WalletRoute.CreateWalletRequest;
-import {inject, injectable} from "inversify";
-import {TYPES} from "./ioc/types";
-import {MessageBroker} from "./message_queue/messageBroker";
-import {Metrics} from "./metrics/metrics";
 
 @injectable()
 export class WalletRoute {

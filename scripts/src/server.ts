@@ -1,7 +1,7 @@
-import {Server} from "http";
-import {PaymentApp} from "./app";
-import {container} from "./ioc/appModules";
-import {TYPES} from "./ioc/types";
+import { Server } from "http";
+import { PaymentApp } from "./app";
+import { container } from "./ioc/appModules";
+import { TYPES } from "./ioc/types";
 
 type ServerError = Error & { syscall: string; code: string; };
 

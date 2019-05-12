@@ -1,5 +1,5 @@
-import {path, assign} from "./utils";
-import {LogTarget} from "./logging";
+import { assign, path } from "./utils";
+import { LogTarget } from "./logging";
 
 export interface Config {
     port?: number;

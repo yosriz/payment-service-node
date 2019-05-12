@@ -1,19 +1,19 @@
 import "reflect-metadata";
 
-import {Container} from "inversify";
-import {TYPES} from "./types";
-import {Logger} from "../logging";
-import {Config} from "../config";
-import {PaymentApp} from "../app";
-import {WalletRoute} from "../walletRoute";
-import {WatchersRoute} from "../watchersRoute";
-import {PaymentsRoute} from "../paymentsRoute";
-import {AppInfoRoute} from "../appInfoRoute";
-import {MessageBroker} from "../message_queue/messageBroker";
-import {createRedisClient, RedisMessageBroker} from "../message_queue/redisMessageBroker";
-import {Metrics} from "../metrics/metrics";
-import {StatsDMetrics} from "../metrics/statsD";
-import {StatsD} from "hot-shots";
+import { Container } from "inversify";
+import { TYPES } from "./types";
+import { Logger } from "../logging";
+import { Config } from "../config";
+import { PaymentApp } from "../app";
+import { WalletRoute } from "../walletRoute";
+import { WatchersRoute } from "../watchersRoute";
+import { PaymentsRoute } from "../paymentsRoute";
+import { AppInfoRoute } from "../appInfoRoute";
+import { MessageBroker } from "../message_queue/messageBroker";
+import { createRedisClient, RedisMessageBroker } from "../message_queue/redisMessageBroker";
+import { Metrics } from "../metrics/metrics";
+import { StatsDMetrics } from "../metrics/statsD";
+import { StatsD } from "hot-shots";
 
 
 export const container = new Container();

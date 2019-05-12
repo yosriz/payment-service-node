@@ -1,11 +1,16 @@
 {
   "compilerOptions": {
     "target": "ES6",
-    "outDir": "src/bin",
+    "outDir": "bin",
     "rootDir": "src",
     "module": "commonjs",
-    "lib": ["dom","es2017"],
-    "types": ["reflect-metadata"],
+    "lib": [
+      "dom",
+      "es2017"
+    ],
+    "types": [
+      "reflect-metadata"
+    ],
     "moduleResolution": "node",
     "strict": true,
     "sourceMap": true,
@@ -14,7 +19,6 @@
     "skipLibCheck": true,
     "removeComments": true,
     "skipDefaultLibCheck": true,
-
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true
   },

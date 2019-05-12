@@ -1,5 +1,5 @@
-import {Metrics} from "./metrics";
-import {StatsD} from "hot-shots";
+import { Metrics } from "./metrics";
+import { StatsD } from "hot-shots";
 
 export class StatsDMetrics implements Metrics {
 

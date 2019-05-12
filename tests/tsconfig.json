@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "outDir": "bin",
+    "module": "commonjs",
+    "lib": [
+      "dom",
+      "es2017"
+    ],
+    "types": [
+      "reflect-metadata"
+    ],
+    "moduleResolution": "node",
+    "strict": true,
+    "inlineSourceMap": true,
+    "declaration": true,
+    "alwaysStrict": true,
+    "skipLibCheck": true,
+    "removeComments": true,
+    "skipDefaultLibCheck": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "exclude": [
+    "bin",
+    "../node_modules"
+  ],
+  "include": [
+    "../scripts/src"
+  ]
+}

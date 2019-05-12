@@ -1,5 +1,5 @@
 import * as winston from "winston";
-import {FileTransportOptions, GenericTextTransportOptions, GenericTransportOptions} from "winston";
+import { FileTransportOptions, GenericTextTransportOptions, GenericTransportOptions } from "winston";
 import * as httpContext from "express-http-context";
 
 export interface LogTarget {
