@@ -31,9 +31,9 @@ export class WalletRoute {
 
 export namespace WalletRoute {
     export interface CreateWalletRequest {
-        wallet_address: string,
-        app_id: string,
-        id: string,
-        callback: string
+        wallet_address: string;
+        app_id: string;
+        id: string;
+        callback: string;
     }
 }

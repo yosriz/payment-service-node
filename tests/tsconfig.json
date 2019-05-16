@@ -10,7 +10,6 @@
     "types": [
       "reflect-metadata"
     ],
-    "moduleResolution": "node",
     "strict": true,
     "inlineSourceMap": true,
     "declaration": true,
