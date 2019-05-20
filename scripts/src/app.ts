@@ -1,10 +1,12 @@
 import * as express from 'express';
+import "express-async-errors"; // handle any unhandled async/await errors in any middleware, so general error
+// handler can catch it
 import { Config } from "./config";
 import { Logger } from "./logging";
 import { GeneralErrorMiddleware, NotFoundMiddleware } from "./middleware";
-import { WalletRoute } from "./walletRoute";
-import { PaymentsRoute } from "./paymentsRoute";
-import { WatchersRoute } from "./watchersRoute";
+import { WalletRoute } from "./routes/walletRoute";
+import { PaymentsRoute } from "./routes/paymentsRoute";
+import { WatchersRoute } from "./routes/watchersRoute";
 import { AppInfoRoute } from "./appInfoRoute";
 import { inject, injectable } from "inversify";
 import { TYPES } from "./ioc/types";
@@ -42,7 +44,7 @@ export class PaymentApp {
         this.createRoutes(app);
         // catch 404
         app.use(new NotFoundMiddleware().handler());
-        // catch errors
+        // catch errors (depends on express-async-errors)
         app.use(new GeneralErrorMiddleware(this.logger).handler());
         return app;
     }

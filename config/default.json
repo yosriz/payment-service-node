@@ -1,11 +1,17 @@
 {
   "port": 3000,
   "app_name": "payment-service-node",
+  "horizon_url": "https://horizon-testnet.kininfrastructure.com/",
+  "network_id": "Kin Testnet ; December 2018",
+  "apps_seeds": {
+    "test": "SC3A6Y4TPZ6UTUKZRYIMIWTM7J5VEMINWZHOSKKNBXY6AUOVAXKA7PEH"
+  },
   "loggers": [
     {
       "name": "console",
       "type": "console",
       "format": "pretty-json"
     }
-  ]
+  ],
+  "redis_url": "redis_url"
 }

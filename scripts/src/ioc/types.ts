@@ -9,5 +9,6 @@ export const TYPES = {
     AppInfoRoute: Symbol.for("AppInfoRoute"),
     MessageBroker: Symbol.for("MessageBroker"),
     Metrics: Symbol.for("Metrics"),
-
+    Kin: Symbol.for("Kin"),
+    WalletService: Symbol.for("WalletService")
 };

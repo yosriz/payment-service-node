@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "ES6",
     "outDir": "bin",
+    "sourceRoot": "../../scripts/src",
     "module": "commonjs",
     "lib": [
       "dom",
@@ -10,6 +11,7 @@
     "types": [
       "reflect-metadata"
     ],
+    "moduleResolution": "node",
     "strict": true,
     "inlineSourceMap": true,
     "declaration": true,
@@ -18,8 +20,7 @@
     "removeComments": true,
     "skipDefaultLibCheck": true,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true
+    "experimentalDecorators": true
   },
   "exclude": [
     "bin",

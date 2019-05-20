@@ -91,7 +91,7 @@ export interface Logger {
     debug(message: string, options?: object): void;
 }
 
-export module Logger {
+export namespace Logger {
 
     export function init(...targets: LogTarget[]): Logger {
 

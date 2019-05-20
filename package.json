@@ -8,7 +8,7 @@
     "transpile": "tsc -p scripts",
     "lint": "./node_modules/.bin/tslint -p .",
     "build": "npm-run-all clean transpile",
-    "start": "node src/bin/server.js",
+    "start": "node scripts/bin/server.js",
     "transpile-tests": "tsc -p tests",
     "test": "npm-run-all transpile transpile-tests jest",
     "jest": "jest --forceExit --runInBand --detectOpenHandles --coverage"
@@ -16,11 +16,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@kinecosystem/kin-sdk-node": "file:../kin-sdk-node",
     "@types/redis": "^2.8.12",
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
-    "express-async-errors": "^3.0.0",
+    "express-async-errors": "^3.1.1",
     "express-http-context": "^1.2.1",
     "hot-shots": "^6.2.0",
     "inversify": "^5.0.1",
@@ -52,16 +53,13 @@
       "js"
     ],
     "testEnvironment": "node",
-    "transform": {
-      "^.+\\.(ts|tsx)$": "ts-jest"
-    },
+    "preset": "ts-jest",
     "testMatch": [
       "**/tests/src/**.ts"
     ],
     "testPathIgnorePatterns": [
       ".d.ts"
     ],
-    "collectCoverage": true,
     "globals": {
       "ts-jest": {
         "diagnostics": false

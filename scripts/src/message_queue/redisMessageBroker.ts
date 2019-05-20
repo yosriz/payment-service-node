@@ -1,7 +1,7 @@
-import { WalletRoute } from "../walletRoute";
 import { MessageBroker } from "./messageBroker";
 import { promisify } from "util";
 import { RedisClient } from "redis";
+import { CreateWalletRequest } from "../models";
 
 type RedisAsyncFunctions = {
     get(key: string): Promise<string>;
@@ -16,7 +16,7 @@ export type RedisAsyncClient = RedisClient & {
     async: RedisAsyncFunctions;
 };
 
-export function createRedisClient(redisUrl :string): RedisAsyncClient {
+export function createRedisClient(redisUrl: string): RedisAsyncClient {
     const redis = require("redis");
     const client = redis.createClient(redisUrl);
     client.async = {} as RedisAsyncFunctions;
@@ -32,7 +32,7 @@ export class RedisMessageBroker implements MessageBroker {
         this.redis = redis;
     }
 
-    enqueueCreateWallet(request: WalletRoute.CreateWalletRequest): void {
+    enqueueCreateWallet(request: CreateWalletRequest): void {
     }
 
 }

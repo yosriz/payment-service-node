@@ -1,5 +1,4 @@
-import { WalletRoute } from "../walletRoute";
-import CreateWalletRequest = WalletRoute.CreateWalletRequest;
+import { CreateWalletRequest } from "../models";
 
 export interface MessageBroker {
     enqueueCreateWallet(request: CreateWalletRequest): void;
