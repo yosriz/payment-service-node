@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES6",
     "outDir": "bin",
-    "sourceRoot": "../../scripts/src",
+    "sourceRoot": "../src",
     "module": "commonjs",
     "lib": [
       "dom",
@@ -27,6 +27,6 @@
     "../node_modules"
   ],
   "include": [
-    "../scripts/src"
+    "../src"
   ]
 }

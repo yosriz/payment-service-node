@@ -1,13 +1,13 @@
-import { Logger } from "../../scripts/src/logging";
-import { WalletService } from "../../scripts/src/services/WalletService";
+import { Logger } from "../../src/logging";
+import { WalletService } from "../../src/services/WalletService";
 import { Arg, Substitute, SubstituteOf } from "@fluffy-spoon/substitute";
-import { MessageBroker } from "../../scripts/src/message_queue/messageBroker";
-import { Metrics } from "../../scripts/src/metrics/metrics";
+import { MessageBroker } from "../../src/message_queue/messageBroker";
+import { Metrics } from "../../src/metrics/metrics";
 import { Response } from "express-serve-static-core";
 import { _ } from "underscore";
-import { Kin } from "../../scripts/src/blockchain/kin";
+import { Kin } from "../../src/blockchain/kin";
 import { ResourceNotFoundError } from "@kinecosystem/kin-sdk-node/scripts/bin/errors";
-import { WalletNotFoundError } from "../../scripts/src/errors";
+import { WalletNotFoundError } from "../../src/errors";
 
 
 describe("WalletService", () => {

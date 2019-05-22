@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "clean": "rimraf src/bin",
-    "transpile": "tsc -p scripts",
+    "clean": "rimraf bin & rimraf tests/bin",
+    "transpile": "tsc -p tsconfig.json",
     "lint": "./node_modules/.bin/tslint -p .",
     "build": "npm-run-all clean transpile",
-    "start": "node scripts/bin/server.js",
+    "start": "node bin/server.js",
     "transpile-tests": "tsc -p tests",
     "test": "npm-run-all transpile transpile-tests jest",
     "jest": "jest --forceExit --runInBand --detectOpenHandles --coverage"

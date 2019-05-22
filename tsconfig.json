@@ -24,6 +24,7 @@
   },
   "exclude": [
     "bin",
+    "tests",
     "../node_modules"
   ]
 }
