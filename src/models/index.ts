@@ -11,3 +11,13 @@ export interface CreateWalletRequest {
     id: string;
     callback: string;
 }
+
+export interface Payment {
+    id: string;
+    app_id: string;
+    transaction_id: string;
+    recipient_address: string;
+    sender_address: string;
+    amount: number;
+    timestamp: string;
+}

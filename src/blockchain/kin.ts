@@ -1,5 +1,12 @@
 import { injectable } from "inversify";
-import { AccountData, Channels, KinAccount, KinClient } from "@kinecosystem/kin-sdk-node";
+import {
+    AccountData,
+    Channels,
+    KinAccount,
+    KinClient,
+    PaymentTransaction,
+    Transaction
+} from "@kinecosystem/kin-sdk-node";
 
 @injectable()
 export class Kin {
@@ -29,6 +36,15 @@ export class Kin {
 
     async getAccountData(account: string): Promise<AccountData> {
         return this.kinClient.getAccountData(account);
+    }
+
+    async getPaymentTransactions(account: string): Promise<PaymentTransaction[]> {
+        const transactions: Transaction[] = await this.kinClient.getTransactionHistory({
+            limit: 100,
+            order: "desc",
+            address: account,
+        });
+        return transactions.filter(tx => tx.type == 'PaymentTransaction') as PaymentTransaction[];
     }
 
 }

@@ -4,9 +4,9 @@ import { Logger } from "../logging";
 import { MessageBroker } from "../message_queue/messageBroker";
 import { Metrics } from "../metrics/metrics";
 import { Kin } from "../blockchain/kin";
-import { KinSdkError } from "@kinecosystem/kin-sdk-node/scripts/bin/errors";
-import { CreateWalletRequest, Wallet } from "../models";
+import { CreateWalletRequest, Payment, Wallet } from "../models";
 import { WalletNotFoundError } from "../errors";
+import { KinSdkError } from "@kinecosystem/kin-sdk-node/scripts/bin/errors";
 
 @injectable()
 export class WalletService {
@@ -43,6 +43,25 @@ export class WalletService {
                 throw e;
             }
         }
+    }
+
+    async getWalletPayments(walletAddress: string) {
+        const payments = await this.kin.getPaymentTransactions(walletAddress);
+        payments.map(paymentTx => {
+            let version, appId: string, paymentId: string;
+            if (paymentTx.memo) {
+                [version, appId, paymentId] = paymentTx.memo.split("|");
+            }
+            const payment: Payment = {
+                id: paymentId!!,
+                amount: paymentTx.amount,
+                sender_address: paymentTx.source,
+                recipient_address: paymentTx.destination,
+                app_id: appId!!,
+                transaction_id: paymentTx.hash,
+                timestamp: paymentTx.
+            };
+        });
     }
 
 }
