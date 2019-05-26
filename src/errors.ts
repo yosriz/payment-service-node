@@ -42,3 +42,21 @@ export class WalletNotFoundError extends ClientError {
         super(404, 2, "No Such Wallet", `Wallet address: ${walletAddress} cannot be found.`);
     }
 }
+
+export class PaymentNotFoundError extends ClientError {
+    constructor(paymentId: string) {
+        super(404, 1, "No Such Payment", `payment ${paymentId} not found.`);
+    }
+}
+
+export class AlreadyExistsError extends ClientError {
+    constructor() {
+        super(409, 1, "Payment Already Exists", `payment already exists.`);
+    }
+}
+
+export class NoSuchServiceError extends ClientError {
+    constructor(appId: string) {
+        super(404, 3, "No Such Service", `Did not find keypair for service: ${appId}.`);
+    }
+}

@@ -21,3 +21,17 @@ export interface Payment {
     amount: number;
     timestamp: string;
 }
+
+export interface PaymentRequest {
+    amount: number;
+    app_id: string
+    is_external: boolean;
+    recipient_address: string;
+    sender_address: string;
+    id: string;
+    callback: string;  //a webhook to call when a payment is complete
+}
+
+export interface AppSeeds {
+    [appID: string]: string;
+}

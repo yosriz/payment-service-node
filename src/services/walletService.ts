@@ -13,7 +13,7 @@ export class WalletService {
 
     constructor(@inject(TYPES.Logger) private readonly logger: Logger,
                 @inject(TYPES.MessageBroker) private readonly messageBroker: MessageBroker,
-                @inject(TYPES.MessageBroker) private readonly metrics: Metrics,
+                @inject(TYPES.Metrics) private readonly metrics: Metrics,
                 @inject(TYPES.Kin) private readonly kin: Kin) {
         this.logger = logger;
         this.messageBroker = messageBroker;

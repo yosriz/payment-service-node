@@ -1,4 +1,4 @@
-import { injectable } from "inversify";
+import {injectable} from "inversify";
 import {
     AccountData,
     Channels,
@@ -34,6 +34,10 @@ export class Kin {
         this.accounts = accountsByAppId;
     }
 
+    public get appsAccounts(): ReadonlyMap<string, KinAccount> {
+        return this.accounts;
+    }
+
     async getAccountData(account: string): Promise<AccountData> {
         return this.kinClient.getAccountData(account);
     }
@@ -50,5 +54,5 @@ export class Kin {
 }
 
 export interface AppSeeds {
-    [seedByAppId: string]: string;
+    [appID: string]: string;
 }

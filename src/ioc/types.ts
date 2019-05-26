@@ -10,5 +10,8 @@ export const TYPES = {
     MessageBroker: Symbol.for("MessageBroker"),
     Metrics: Symbol.for("Metrics"),
     Kin: Symbol.for("Kin"),
-    WalletService: Symbol.for("WalletService")
+    WalletService: Symbol.for("WalletService"),
+    Database: Symbol.for("Database"),
+    PaymentService: Symbol.for("PaymentService"),
+
 };

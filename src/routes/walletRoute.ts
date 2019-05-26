@@ -1,11 +1,9 @@
 import * as express from "express";
-import { Request, Response } from "express-serve-static-core";
-import { inject, injectable } from "inversify";
-import { TYPES } from "../ioc/types";
-import { WalletService } from "../services/walletService";
-import { CreateWalletRequest } from "../models";
-import GetWalletRequest = WalletRoute.GetWalletRequest;
-import GetWalletPaymentsRequest = WalletRoute.GetWalletPaymentsRequest;
+import {Request, Response} from "express-serve-static-core";
+import {inject, injectable} from "inversify";
+import {TYPES} from "../ioc/types";
+import {WalletService} from "../services/walletService";
+import {CreateWalletRequest} from "../models";
 
 @injectable()
 export class WalletRoute {
@@ -31,17 +29,14 @@ export class WalletRoute {
 
 }
 
-export namespace WalletRoute {
-
-    export type GetWalletRequest = Request & {
-        params: {
-            wallet_address: string
-        }
-    };
-    export type GetWalletPaymentsRequest = Request & {
-        params: {
-            wallet_address: string
-        }
-    };
-}
+type GetWalletRequest = Request & {
+    params: {
+        wallet_address: string
+    }
+};
+type GetWalletPaymentsRequest = Request & {
+    params: {
+        wallet_address: string
+    }
+};
 

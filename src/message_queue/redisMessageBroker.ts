@@ -1,7 +1,7 @@
-import { MessageBroker } from "./messageBroker";
-import { promisify } from "util";
-import { RedisClient } from "redis";
-import { CreateWalletRequest } from "../models";
+import {MessageBroker} from "./messageBroker";
+import {promisify} from "util";
+import {RedisClient} from "redis";
+import {CreateWalletRequest, PaymentRequest} from "../models";
 
 type RedisAsyncFunctions = {
     get(key: string): Promise<string>;
@@ -33,6 +33,9 @@ export class RedisMessageBroker implements MessageBroker {
     }
 
     enqueueCreateWallet(request: CreateWalletRequest): void {
+    }
+
+    enqueueSendPayment(payment: PaymentRequest): void {
     }
 
 }
