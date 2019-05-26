@@ -5,6 +5,7 @@ import { TYPES } from "../ioc/types";
 import { WalletService } from "../services/walletService";
 import { CreateWalletRequest } from "../models";
 import GetWalletRequest = WalletRoute.GetWalletRequest;
+import GetWalletPaymentsRequest = WalletRoute.GetWalletPaymentsRequest;
 
 @injectable()
 export class WalletRoute {
@@ -23,7 +24,9 @@ export class WalletRoute {
         res.status(200).send(wallet);
     };
 
-    public readonly getWalletPayments: express.RequestHandler = (req: Request, res: Response) => {
+    public readonly getWalletPayments: express.RequestHandler = async (req: GetWalletPaymentsRequest, res: Response) => {
+        const payments = await this.walletService.getWalletPayments(req.params.wallet_address);
+        res.status(200).send({payments: payments});
     };
 
 }
@@ -31,6 +34,11 @@ export class WalletRoute {
 export namespace WalletRoute {
 
     export type GetWalletRequest = Request & {
+        params: {
+            wallet_address: string
+        }
+    };
+    export type GetWalletPaymentsRequest = Request & {
         params: {
             wallet_address: string
         }

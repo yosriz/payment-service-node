@@ -21,7 +21,7 @@ import { WalletService } from "../services/walletService";
 
 export const container = new Container();
 
-const config = Config.load('config/default.json');
+const config = Config.load("config/default.json");
 const logger = Logger.init(...config.loggers!);
 const statsd = new StatsD(Object.assign({prefix: "payment."}, config.statsd));
 // const redisClient = createRedisClient(config.redis_url);
