@@ -1,29 +1,29 @@
-import {Logger} from "../../src/logging";
-import {WalletService} from "../../src/services/WalletService";
-import {Arg, Substitute, SubstituteOf} from "@fluffy-spoon/substitute";
-import {MessageBroker} from "../../src/message_queue/messageBroker";
-import {Metrics} from "../../src/metrics/metrics";
-import {_} from "underscore";
-import {Kin} from "../../src/blockchain/kin";
-import {ResourceNotFoundError} from "@kinecosystem/kin-sdk-node/scripts/bin/errors";
-import {WalletNotFoundError} from "../../src/errors";
-import {PaymentTransaction} from "@kinecosystem/kin-sdk-node";
-import {Payment} from "../../src/models";
+import { Logger } from "../../src/logging";
+import { WalletService } from "../../src/services/WalletService";
+import { Arg, Substitute, SubstituteOf } from "@fluffy-spoon/substitute";
+import { MessageBroker } from "../../src/message_queue/messageBroker";
+import { Metrics } from "../../src/metrics/metrics";
+import { _ } from "underscore";
+import { Kin } from "../../src/blockchain/kin";
+import { ResourceNotFoundError } from "@kinecosystem/kin-sdk-node/scripts/bin/errors";
+import { WalletNotFoundError } from "../../src/errors";
+import { PaymentTransaction } from "@kinecosystem/kin-sdk-node";
+import { Payment } from "../../src/models";
 
 
 describe("WalletService", () => {
-    let mockLogger = Substitute.for<Logger>();
-    let mockMessageBroker = Substitute.for<MessageBroker>();
-    let mockMetrics = Substitute.for<Metrics>();
+    let mockLogger: SubstituteOf<Logger>;
+    let mockMessageBroker: SubstituteOf<MessageBroker>;
+    let mockMetrics: SubstituteOf<Metrics>;
     let mockKin: SubstituteOf<Kin>;
-    let route: WalletService;
+    let service: WalletService;
 
     beforeEach(() => {
         mockLogger = Substitute.for<Logger>();
         mockMessageBroker = Substitute.for<MessageBroker>();
         mockMetrics = Substitute.for<Metrics>();
         mockKin = Substitute.for<Kin>();
-        route = new WalletService(mockLogger, mockMessageBroker, mockMetrics, mockKin);
+        service = new WalletService(mockLogger, mockMessageBroker, mockMetrics, mockKin);
     });
 
     test("when createWallet should enqueue create request", () => {
@@ -33,14 +33,14 @@ describe("WalletService", () => {
             wallet_address: "GCJXG6YVI5VGUOZNYCV5TD7O5LBN3GWZOWA27YEV35VLSZDE6JZJKFTQ",
             callback: "http://webhook"
         };
-        route.createWallet(wallet);
+        service.createWallet(wallet);
 
         mockMessageBroker.received().enqueueCreateWallet(Arg.is(x => _.isEqual(x, wallet)));
     });
 
     test("when getWallet and wallet exists should return wallet details", async () => {
             const walletAddress = "GBAVLXZUOVTWAULFJ2X4HAHKZPEM7UHHVMTOKQIDMSIGWSN27V6LPHHJ";
-            mockKin.getAccountData(walletAddress).returns({
+        mockKin.getAccountData(walletAddress).returns(Promise.resolve({
                 id: walletAddress,
                 accountId: walletAddress,
                 sequenceNumber: 1499647960940544,
@@ -62,8 +62,8 @@ describe("WalletService", () => {
                         limit: undefined
                     }],
                 flags: {authRequired: false, authRevocable: false}
-            });
-            const wallet = await route.getWallet(walletAddress);
+        }));
+        const wallet = await service.getWallet(walletAddress);
             expect(wallet.wallet_address).toBe(walletAddress);
             expect(wallet.native_balance).toBe(10_000);
             expect(wallet.kin_balance).toBe(10_000);
@@ -77,7 +77,7 @@ describe("WalletService", () => {
             throw new ResourceNotFoundError({type: '', status: 404, title: ''});
         });
         const walletAddress = "some_non_existing_wallet_address";
-        await expect(route.getWallet(walletAddress))
+        await expect(service.getWallet(walletAddress))
             .rejects.toEqual(new WalletNotFoundError(walletAddress));
 
     });
@@ -111,7 +111,7 @@ describe("WalletService", () => {
             ]
         ));
 
-        const payments = await route.getWalletPayments(walletAddress);
+        const payments = await service.getWalletPayments(walletAddress);
         expect(payments.length).toBe(2);
         expect(payments[0]).toEqual({
             transaction_id: "some_hash1",
@@ -139,7 +139,7 @@ describe("WalletService", () => {
         });
 
         const walletAddress = "some_non_existing_wallet_address";
-        await expect(route.getWalletPayments(walletAddress))
+        await expect(service.getWalletPayments(walletAddress))
             .rejects.toEqual(new WalletNotFoundError(walletAddress));
     });
 

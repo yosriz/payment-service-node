@@ -1,10 +1,10 @@
-import {inject, injectable} from "inversify";
-import {TYPES} from "../ioc/types";
-import {MessageBroker} from "../message_queue/messageBroker";
-import {Kin} from "../blockchain/kin";
-import {Payment, PaymentRequest} from "../models";
-import {AlreadyExistsError, NoSuchServiceError, PaymentNotFoundError} from "../errors";
-import {Database} from "../db/database";
+import { inject, injectable } from "inversify";
+import { TYPES } from "../ioc/types";
+import { MessageBroker } from "../message_queue/messageBroker";
+import { Kin } from "../blockchain/kin";
+import { Payment, PaymentRequest } from "../models";
+import { NoSuchServiceError, PaymentAlreadyExistsError, PaymentNotFoundError } from "../errors";
+import { Database } from "../db/database";
 
 @injectable()
 export class PaymentService {
@@ -22,13 +22,13 @@ export class PaymentService {
         if (!payment) {
             throw new PaymentNotFoundError(paymentId);
         } else {
-            return payment
+            return payment;
         }
     }
 
     async pay(payment: PaymentRequest) {
         if (await this.db.doesPaymentExist(payment.id)) {
-            throw new AlreadyExistsError();
+            throw new PaymentAlreadyExistsError();
         }
         if (payment.is_external &&
             !this.kin.appsAccounts.has(payment.app_id)) {

@@ -1,11 +1,10 @@
-import {Logger} from "../logging";
+import { Logger } from "../logging";
 import * as express from "express";
-import {Request, Response} from "express-serve-static-core";
-import {inject, injectable} from "inversify";
-import {TYPES} from "../ioc/types";
-import {PaymentService} from "../services/paymentService";
-import {PaymentRequest} from "../models";
-import {AlreadyExistsError} from "../errors";
+import { Request, Response } from "express-serve-static-core";
+import { inject, injectable } from "inversify";
+import { TYPES } from "../ioc/types";
+import { PaymentService } from "../services/paymentService";
+import { PaymentRequest } from "../models";
 
 @injectable()
 export class PaymentsRoute {

@@ -49,7 +49,7 @@ export class PaymentNotFoundError extends ClientError {
     }
 }
 
-export class AlreadyExistsError extends ClientError {
+export class PaymentAlreadyExistsError extends ClientError {
     constructor() {
         super(409, 1, "Payment Already Exists", `payment already exists.`);
     }
