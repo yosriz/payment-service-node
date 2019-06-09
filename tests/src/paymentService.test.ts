@@ -79,7 +79,7 @@ describe("PaymentService", () => {
         mockKin.appsAccounts.returns(new Map([["none", undefined as any]]) as ReadonlyMap<string, KinAccount>);
 
         await expect(service.pay(payRequest))
-            .rejects.toEqual(new NoSuchServiceError(payRequest.app_id));
+            .rejects.toBeInstanceOf(NoSuchServiceError);
     });
 
     test("when payment exist should throw error", async () => {

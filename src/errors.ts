@@ -56,7 +56,7 @@ export class PaymentAlreadyExistsError extends ClientError {
 }
 
 export class NoSuchServiceError extends ClientError {
-    constructor(appId: string) {
-        super(404, 3, "No Such Service", `Did not find keypair for service: ${appId}.`);
+    constructor(msg: string) {
+        super(404, 3, "No Such Service", msg);
     }
 }

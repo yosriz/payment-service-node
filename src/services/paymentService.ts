@@ -32,7 +32,7 @@ export class PaymentService {
         }
         if (payment.is_external &&
             !this.kin.appsAccounts.has(payment.app_id)) {
-            throw new NoSuchServiceError(payment.app_id);
+            throw new NoSuchServiceError(`Did not find keypair for service: ${payment.app_id}.`);
         }
         this.messageBroker.enqueueSendPayment(payment);
     }

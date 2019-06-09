@@ -13,5 +13,6 @@ export const TYPES = {
     WalletService: Symbol.for("WalletService"),
     Database: Symbol.for("Database"),
     PaymentService: Symbol.for("PaymentService"),
-
+    Watcher: Symbol.for("Watcher"),
+    WatcherService: Symbol.for("WatcherService"),
 };

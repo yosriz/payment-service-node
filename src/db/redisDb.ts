@@ -1,6 +1,6 @@
-import {Payment} from "../models";
-import {RedisAsyncClient} from "../message_queue/redisMessageBroker";
-import {Database} from "./database";
+import { Payment } from "../models";
+import { RedisAsyncClient } from "../message_queue/redisMessageBroker";
+import { Database } from "./database";
 
 export class RedisDb implements Database {
 
@@ -14,6 +14,14 @@ export class RedisDb implements Database {
 
     async doesPaymentExist(paymentId: string): Promise<boolean> {
         return false;
+    }
+
+    async doesServiceExists(serviceId: string): Promise<boolean> {
+        return false;
+    }
+
+    async addService(serviceId: string, callbackUrl: string): Promise<void> {
+        return undefined;
     }
 
 }

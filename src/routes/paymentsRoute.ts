@@ -20,7 +20,7 @@ export class PaymentsRoute {
     };
 
     public readonly pay: express.RequestHandler = async (req: PayRequest, res: Response) => {
-        await this.service.pay(req.body)
+        await this.service.pay(req.body);
         res.status(201).send();
     };
 }
