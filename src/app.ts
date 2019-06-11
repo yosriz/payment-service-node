@@ -7,9 +7,10 @@ import { GeneralErrorMiddleware, NotFoundMiddleware } from "./middleware";
 import { WalletRoute } from "./routes/walletRoute";
 import { PaymentsRoute } from "./routes/paymentsRoute";
 import { WatchersRoute } from "./routes/watchersRoute";
-import { AppInfoRoute } from "./appInfoRoute";
+import { AppInfoRoute } from "./routes/appInfoRoute";
 import { inject, injectable } from "inversify";
 import { TYPES } from "./ioc/types";
+import { WhitelistRoute } from "./routes/whitelistRoute";
 
 @injectable()
 export class PaymentApp {
@@ -19,13 +20,15 @@ export class PaymentApp {
                        @inject(TYPES.WalletRoute) public readonly walletRoute: WalletRoute,
                        @inject(TYPES.WatchersRoute) public readonly watchersRoute: WatchersRoute,
                        @inject(TYPES.PaymentsRoute) public readonly paymentsRoute: PaymentsRoute,
-                       @inject(TYPES.AppInfoRoute) public readonly appInfoRoute: AppInfoRoute,) {
+                       @inject(TYPES.AppInfoRoute) public readonly appInfoRoute: AppInfoRoute,
+                       @inject(TYPES.WhitelistRoute) public readonly whitelistRoute: WhitelistRoute) {
         this.config = config;
         this.logger = logger;
         this.walletRoute = walletRoute;
         this.watchersRoute = watchersRoute;
         this.paymentsRoute = paymentsRoute;
         this.appInfoRoute = appInfoRoute;
+        this.whitelistRoute = whitelistRoute;
     }
 
     public async init() {
@@ -57,6 +60,7 @@ export class PaymentApp {
         app.post('/payments/', this.paymentsRoute.pay);
         app.post('/watchers/:service_id', this.watchersRoute.addWatch);
         app.delete('/watchers/:service_id', this.watchersRoute.removeWatch);
+        app.post('/whitelist', this.whitelistRoute.whitelist);
         app.get('/status', this.appInfoRoute.status);
         app.get('/config', this.appInfoRoute.config);
     }

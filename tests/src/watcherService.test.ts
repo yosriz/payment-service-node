@@ -23,7 +23,8 @@ describe("WatcherService", () => {
     test("when payment exists getPayment should return payment", async () => {
         mockDatabase.doesServiceExists("1234").returns(Promise.resolve(true));
 
-        const payment = await service.addWatcher("1234", "http://mycallback", ["1", "2"], "aebcfgdhe");
+        const payment = await service.addWatcher("1234", "http://mycallback",
+            ["1", "2"], "aebcfgdhe");
     });
 
 });

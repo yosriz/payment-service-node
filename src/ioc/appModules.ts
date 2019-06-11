@@ -8,7 +8,7 @@ import { PaymentApp } from "../app";
 import { WalletRoute } from "../routes/walletRoute";
 import { WatchersRoute } from "../routes/watchersRoute";
 import { PaymentsRoute } from "../routes/paymentsRoute";
-import { AppInfoRoute } from "../appInfoRoute";
+import { AppInfoRoute } from "../routes/appInfoRoute";
 import { MessageBroker } from "../message_queue/messageBroker";
 import { RedisAsyncClient, RedisMessageBroker } from "../message_queue/redisMessageBroker";
 import { Metrics } from "../metrics/metrics";

@@ -1,3 +1,5 @@
+import { WhitelistRoute } from "../routes/whitelistRoute";
+
 export const TYPES = {
     Logger: Symbol.for("Logger"),
     Config: Symbol.for("Config"),
@@ -15,4 +17,6 @@ export const TYPES = {
     PaymentService: Symbol.for("PaymentService"),
     Watcher: Symbol.for("Watcher"),
     WatcherService: Symbol.for("WatcherService"),
+    WhitelistRoute: Symbol.for("WhitelistRoute"),
+    WhitelistService: Symbol.for("WhitelistService"),
 };

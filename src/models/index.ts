@@ -35,3 +35,13 @@ export interface PaymentRequest {
 export interface AppSeeds {
     [appID: string]: string;
 }
+
+export interface WhitelistRequest {
+    order_id: string;
+    source: string;
+    destination: string;
+    amount: number;
+    xdr: string;
+    network_id: string;
+    app_id: string;
+}

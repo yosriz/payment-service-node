@@ -30,7 +30,7 @@ export class WatcherService {
         if (!this.db.doesServiceExists(serviceId)) {
             throw new NoSuchServiceError(`There is no watcher for service: ${serviceId}`);
         }
-        this.watcher.remove(serviceId, address, orderId);
+        await this.watcher.remove(serviceId, address, orderId);
         this.logger.info(`Removed order: ${orderId} to watcher for: ${address}`);
 
     }
