@@ -4,9 +4,14 @@ import {
     Channels,
     KinAccount,
     KinClient,
+    NetworkMismatchedError,
     PaymentTransaction,
     Transaction
 } from "@kinecosystem/kin-sdk-node";
+import {
+    Network,
+    Transaction as BaseSdkTransaction
+} from "@kinecosystem/kin-sdk-node/node_modules/@kinecosystem/kin-sdk";
 
 @injectable()
 export class Kin {
@@ -49,6 +54,14 @@ export class Kin {
             address: account,
         });
         return transactions.filter(tx => tx.type == 'PaymentTransaction') as PaymentTransaction[];
+    }
+
+    decodeTransaction(txEnvelope: string, networkId: string): BaseSdkTransaction {
+        let networkPassphrase = Network.current().networkPassphrase();
+        if (networkPassphrase !== networkId) {
+            throw new NetworkMismatchedError();
+        }
+        return new BaseSdkTransaction(txEnvelope);
     }
 
 }
