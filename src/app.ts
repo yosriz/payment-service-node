@@ -61,7 +61,7 @@ export class PaymentApp {
         app.post('/watchers/:service_id', this.watchersRoute.addWatch);
         app.delete('/watchers/:service_id', this.watchersRoute.removeWatch);
         app.post('/whitelist', this.whitelistRoute.whitelist);
-        app.get('/status', this.appInfoRoute.status);
-        app.get('/config', this.appInfoRoute.config);
+        app.get('/status', this.appInfoRoute.statusHandler);
+        app.get('/config', this.appInfoRoute.configHandler);
     }
 }

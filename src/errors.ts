@@ -60,3 +60,9 @@ export class NoSuchServiceError extends ClientError {
         super(404, 3, "No Such Service", msg);
     }
 }
+
+export class TransactionMismatchError extends ClientError {
+    constructor(msg: string) {
+        super(401, 5, "Transaction Mismatch", msg);
+    }
+}

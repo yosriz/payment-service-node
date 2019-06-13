@@ -1,4 +1,4 @@
-import {injectable} from "inversify";
+import { injectable } from "inversify";
 import {
     AccountData,
     Channels,
@@ -20,7 +20,6 @@ export class Kin {
     constructor(private readonly kinClient: KinClient, channelsSeed: string, channelsSalt: string, channelsCount: number
         , appSeeds: AppSeeds) {
         this.kinClient = kinClient;
-        const accountsByAppId: any = {};
         let channelsSeeds = undefined;
         if (channelsSeed && channelsSalt && channelsCount) {
             channelsSeeds = Channels.generateSeeds({
@@ -29,12 +28,13 @@ export class Kin {
                 channelsCount: channelsCount
             }).map(keyPair => keyPair.seed);
         }
+        const accountsByAppId = new Map<string, KinAccount>();
         for (const appId in appSeeds) {
-            accountsByAppId[appId] = this.kinClient.createKinAccount({
+            accountsByAppId.set(appId, this.kinClient.createKinAccount({
                 appId: appId,
                 seed: appSeeds[appId],
                 channelSecretKeys: channelsSeeds
-            });
+            }));
         }
         this.accounts = accountsByAppId;
     }
@@ -57,7 +57,7 @@ export class Kin {
     }
 
     decodeTransaction(txEnvelope: string, networkId: string): BaseSdkTransaction {
-        let networkPassphrase = Network.current().networkPassphrase();
+        const networkPassphrase = Network.current().networkPassphrase();
         if (networkPassphrase !== networkId) {
             throw new NetworkMismatchedError();
         }
