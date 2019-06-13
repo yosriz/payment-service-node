@@ -4,8 +4,8 @@ import { WhitelistRequest } from "../models";
 import { Kin } from "../blockchain/kin";
 import { NetworkMismatchedError } from "@kinecosystem/kin-sdk-node";
 import { NoSuchServiceError, TransactionMismatchError } from "../errors";
-import { Operation } from "@kinecosystem/kin-sdk-node/node_modules/@kinecosystem/kin-base";
-import { Transaction as BaseSdkTransaction } from "@kinecosystem/kin-sdk-node/node_modules/@kinecosystem/kin-sdk";
+import { Operation } from "@kinecosystem/kin-base";
+import { Transaction as BaseSdkTransaction } from "@kinecosystem/kin-sdk";
 
 @injectable()
 export class WhitelistService {

@@ -8,10 +8,7 @@ import {
     PaymentTransaction,
     Transaction
 } from "@kinecosystem/kin-sdk-node";
-import {
-    Network,
-    Transaction as BaseSdkTransaction
-} from "@kinecosystem/kin-sdk-node/node_modules/@kinecosystem/kin-sdk";
+import { Network, Transaction as BaseSdkTransaction } from "@kinecosystem/kin-sdk";
 
 @injectable()
 export class Kin {

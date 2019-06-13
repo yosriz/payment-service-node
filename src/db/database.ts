@@ -8,4 +8,8 @@ export interface Database {
     doesServiceExists(serviceId: string): Promise<boolean>;
 
     addService(serviceId: string, callbackUrl: string): Promise<void>;
+
+    addWatcher(serviceId: string, address: string, orderId: string): Promise<void>;
+
+    removeWatcher(serviceId: string, address: string, orderId: string): Promise<void>;
 }

@@ -1,4 +1,4 @@
-import {CreateWalletRequest, PaymentRequest} from "../models";
+import { CreateWalletRequest, PaymentRequest } from "../models";
 
 export interface MessageBroker {
     enqueueCreateWallet(request: CreateWalletRequest): void;

@@ -1,41 +1,22 @@
-import {MessageBroker} from "./messageBroker";
-import {promisify} from "util";
-import {RedisClient} from "redis";
-import {CreateWalletRequest, PaymentRequest} from "../models";
-
-type RedisAsyncFunctions = {
-    get(key: string): Promise<string>;
-    mget(...key: string[]): Promise<string[]>;
-    set(key: string, value: string): Promise<"OK">;
-    setex(key: string, seconds: number, value: string): Promise<"OK">;
-    del(key: string): Promise<number>;
-    incrby(key: string, incValue: number): Promise<number>;
-};
-
-export type RedisAsyncClient = RedisClient & {
-    async: RedisAsyncFunctions;
-};
-
-export function createRedisClient(redisUrl: string): RedisAsyncClient {
-    const redis = require("redis");
-    const client = redis.createClient(redisUrl);
-    client.async = {} as RedisAsyncFunctions;
-    ["get", "mget", "set", "setex", "del", "incrby"].forEach(name => {
-        (client.async as any)[name] = promisify((client as any)[name]).bind(client);
-    });
-    return client;
-}
+import { MessageBroker } from "./messageBroker";
+import { CreateWalletRequest, PaymentRequest } from "../models";
+import { Queue } from "bull";
+import { Logger } from "../logging";
 
 export class RedisMessageBroker implements MessageBroker {
 
-    constructor(private readonly redis: RedisAsyncClient) {
-        this.redis = redis;
+    constructor(private readonly queue: Queue, private readonly logger: Logger) {
+        this.queue = queue;
+        this.logger = logger;
     }
 
-    enqueueCreateWallet(request: CreateWalletRequest): void {
+    async enqueueCreateWallet(request: CreateWalletRequest) {
+        const job = await this.queue.add(request, {removeOnComplete: true, removeOnFail: true});
+        this.logger.info("enqueue create wallet result" + {result: job, wallet_request: request});
     }
 
-    enqueueSendPayment(payment: PaymentRequest): void {
+    async enqueueSendPayment(request: PaymentRequest) {
+        const job = await this.queue.add(request, {removeOnComplete: true, removeOnFail: true});
+        this.logger.info("enqueue send payment result" + {result: job, payment_request: request});
     }
-
 }

@@ -10,7 +10,7 @@ import { WatchersRoute } from "../routes/watchersRoute";
 import { PaymentsRoute } from "../routes/paymentsRoute";
 import { AppInfoRoute } from "../routes/appInfoRoute";
 import { MessageBroker } from "../message_queue/messageBroker";
-import { RedisAsyncClient, RedisMessageBroker } from "../message_queue/redisMessageBroker";
+import { RedisMessageBroker } from "../message_queue/redisMessageBroker";
 import { Metrics } from "../metrics/metrics";
 import { StatsDMetrics } from "../metrics/statsD";
 import { StatsD } from "hot-shots";
@@ -21,6 +21,7 @@ import { Database } from "../db/database";
 import { RedisDb } from "../db/redisDb";
 import { PaymentService } from "../services/paymentService";
 import { WatcherService } from "../services/watcherService";
+import { RedisAsyncClient } from "../redis";
 
 
 export const container = new Container();
@@ -29,6 +30,8 @@ const config = Config.load("config/default.json");
 const logger = Logger.init(...config.loggers!);
 const statsd = new StatsD(Object.assign({prefix: "payment."}, config.statsd));
 // const redisClient = createRedisClient(config.redis_url);
+const Queue = require("bull");
+const queue = new Queue("payment");
 
 container.bind<Config>(TYPES.Config).toConstantValue(config);
 container.bind<Logger>(TYPES.Logger).toConstantValue(logger);
@@ -37,7 +40,7 @@ container.bind<WalletRoute>(TYPES.WalletRoute).to(WalletRoute);
 container.bind<WatchersRoute>(TYPES.WatchersRoute).to(WatchersRoute);
 container.bind<PaymentsRoute>(TYPES.PaymentsRoute).to(PaymentsRoute);
 container.bind<AppInfoRoute>(TYPES.AppInfoRoute).to(AppInfoRoute);
-container.bind<MessageBroker>(TYPES.MessageBroker).toConstantValue(new RedisMessageBroker(undefined as any as RedisAsyncClient));
+container.bind<MessageBroker>(TYPES.MessageBroker).toConstantValue(new RedisMessageBroker(queue, logger));
 container.bind<Database>(TYPES.Database).toConstantValue(new RedisDb(undefined as any as RedisAsyncClient));
 container.bind<Metrics>(TYPES.Metrics).toConstantValue(new StatsDMetrics(statsd));
 container.bind<Kin>(TYPES.Kin).toConstantValue(createKin());

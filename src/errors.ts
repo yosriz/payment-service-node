@@ -66,3 +66,11 @@ export class TransactionMismatchError extends ClientError {
         super(401, 5, "Transaction Mismatch", msg);
     }
 }
+
+
+export class OrderNotFoundError extends ClientError {
+    constructor(msg: string) {
+        super(404, 4, "Order Not Found", msg);
+    }
+}
+
