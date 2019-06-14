@@ -41,7 +41,7 @@ container.bind<WatchersRoute>(TYPES.WatchersRoute).to(WatchersRoute);
 container.bind<PaymentsRoute>(TYPES.PaymentsRoute).to(PaymentsRoute);
 container.bind<AppInfoRoute>(TYPES.AppInfoRoute).to(AppInfoRoute);
 container.bind<MessageBroker>(TYPES.MessageBroker).toConstantValue(new RedisMessageBroker(queue, logger));
-container.bind<Database>(TYPES.Database).toConstantValue(new RedisDb(undefined as any as RedisAsyncClient));
+container.bind<Database>(TYPES.Database).toConstantValue(new RedisDb(undefined as any as RedisAsyncClient, 500));
 container.bind<Metrics>(TYPES.Metrics).toConstantValue(new StatsDMetrics(statsd));
 container.bind<Kin>(TYPES.Kin).toConstantValue(createKin());
 container.bind<WalletService>(TYPES.WalletService).to(WalletService);
