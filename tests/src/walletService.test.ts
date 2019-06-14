@@ -1,5 +1,5 @@
 import { Logger } from "../../src/logging";
-import { WalletService } from "../../src/services/WalletService";
+import { WalletService } from "../../src/services/walletService";
 import { Arg, Substitute, SubstituteOf } from "@fluffy-spoon/substitute";
 import { MessageBroker } from "../../src/message_queue/messageBroker";
 import { Metrics } from "../../src/metrics/metrics";
