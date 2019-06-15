@@ -1,5 +1,5 @@
 import {inject, injectable} from "inversify";
-import {TYPES} from "../ioc/types";
+import {TYPES} from "../../common/ioc/types";
 import {Logger} from "../../common/logging";
 import {MessageBroker} from "../../common/message_queue/messageBroker";
 import {Metrics} from "../../common/metrics/metrics";
@@ -7,6 +7,7 @@ import {Kin} from "../../common/blockchain/kin";
 import {CreateWalletRequest, Payment, Wallet} from "../../common/models";
 import {WalletNotFoundError} from "../../common/errors";
 import {KinSdkError} from "@kinecosystem/kin-sdk-node";
+import {parseMemo} from "../../common/utils";
 
 @injectable()
 export class WalletService {
@@ -53,9 +54,9 @@ export class WalletService {
         try {
             const payments = await this.kin.getPaymentTransactions(walletAddress);
             return payments.map(paymentTx => {
-                let version, appId: string, paymentId: string;
                 if (paymentTx.memo) {
-                    [version, appId, paymentId] = paymentTx.memo.split("-");
+                    // noinspection ES6ConvertVarToLetConst
+                    var {appId, paymentId} = parseMemo(paymentTx.memo);
                 }
                 const payment: Payment = {
                     id: paymentId!!,

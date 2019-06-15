@@ -11,5 +11,13 @@ export interface Database {
 
     addWatcher(serviceId: string, address: string, orderId: string): Promise<void>;
 
+    getAllWatchedAddresses(): Promise<string[]>;
+
     removeWatcher(serviceId: string, address: string, orderId: string): Promise<void>;
+
+    getServicesByWatchedAddress(address: string): Promise<string[]>;
+
+    getCursor(): Promise<string>;
+
+    saveCursor(pagingToken: string): Promise<void>;
 }

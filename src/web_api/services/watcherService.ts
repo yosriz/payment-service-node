@@ -1,5 +1,5 @@
 import {inject, injectable} from "inversify";
-import {TYPES} from "../ioc/types";
+import {TYPES} from "../../common/ioc/types";
 import {NoSuchServiceError} from "../../common/errors";
 import {Database} from "../../common/db/database";
 import {Logger} from "../../common/logging";

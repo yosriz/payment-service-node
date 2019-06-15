@@ -1,7 +1,7 @@
 import * as express from "express";
 import {Request, Response} from "express-serve-static-core";
 import {inject, injectable} from "inversify";
-import {TYPES} from "../ioc/types";
+import {TYPES} from "../../common/ioc/types";
 import {WatcherService} from "../services/watcherService";
 
 @injectable()

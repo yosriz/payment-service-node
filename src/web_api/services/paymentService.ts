@@ -1,5 +1,5 @@
 import {inject, injectable} from "inversify";
-import {TYPES} from "../ioc/types";
+import {TYPES} from "../../common/ioc/types";
 import {MessageBroker} from "../../common/message_queue/messageBroker";
 import {Kin} from "../../common/blockchain/kin";
 import {Payment, PaymentRequest} from "../../common/models";

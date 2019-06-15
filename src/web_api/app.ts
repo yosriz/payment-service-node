@@ -9,8 +9,8 @@ import {PaymentsRoute} from "./routes/paymentsRoute";
 import {WatchersRoute} from "./routes/watchersRoute";
 import {AppInfoRoute} from "./routes/appInfoRoute";
 import {inject, injectable} from "inversify";
-import {TYPES} from "./ioc/types";
 import {WhitelistRoute} from "./routes/whitelistRoute";
+import {TYPES} from "../common/ioc/types";
 
 @injectable()
 export class PaymentApp {

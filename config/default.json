@@ -13,5 +13,5 @@
       "format": "pretty-json"
     }
   ],
-  "redis_url": "redis_url"
+  "redis_url": "redis://localhost:6379"
 }

@@ -16,3 +16,10 @@ export function assign<T>(target: Partial<T>, ...sources: Array<Partial<T>>) {
             .reduce((obj, [key, value]) => ((obj as any)[key] = value, obj), {})
     ));
 }
+
+export function parseMemo(memo: string): Memo {
+    const [version, appId, paymentId] = memo.split("-");
+    return {appId: appId, paymentId: paymentId};
+}
+
+export type Memo = { appId: string, paymentId: string };

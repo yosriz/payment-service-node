@@ -8,7 +8,8 @@ import {
     PaymentTransaction,
     Transaction
 } from "@kinecosystem/kin-sdk-node";
-import {Network, Transaction as BaseSdkTransaction} from "@kinecosystem/kin-sdk";
+import {Network, Server, Transaction as BaseSdkTransaction} from "@kinecosystem/kin-sdk";
+import {TransactionRetriever} from "@kinecosystem/kin-sdk-node/scripts/bin/blockchain/transactionRetriever";
 
 @injectable()
 export class Kin {
@@ -51,6 +52,34 @@ export class Kin {
             address: account,
         });
         return transactions.filter(tx => tx.type == 'PaymentTransaction') as PaymentTransaction[];
+    }
+
+    async getLatestPaymentTransactions(addresses: string[], cursor?: string)
+        : Promise<{ payments: { tx: PaymentTransaction, watchedAddress: string }[], pagingToken?: string }> {
+        let txs = await ((this.kinClient as any)._server as Server).transactions()
+            .limit(100)
+            .cursor(cursor ? cursor : "now")
+            .order('desc')
+            .call();
+
+        const transactions = [];
+        let pagingToken;
+        for (const tx of txs.records) {
+            const transaction = TransactionRetriever.fromStellarTransaction(tx);
+            if (transaction.type == "PaymentTransaction") {
+                let address;
+                if (addresses.includes(transaction.source)) {
+                    address = transaction.source;
+                } else if (addresses.includes(transaction.destination)) {
+                    address = transaction.destination;
+                }
+                if (address) {
+                    transactions.push({tx: transaction, watchedAddress: address});
+                    pagingToken = tx.paging_token;
+                }
+            }
+        }
+        return {payments: transactions, pagingToken: pagingToken};
     }
 
     decodeTransaction(txEnvelope: string, networkId: string): BaseSdkTransaction {

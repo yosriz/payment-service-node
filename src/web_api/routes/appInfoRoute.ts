@@ -1,8 +1,8 @@
 import * as express from "express";
 import {Request, Response} from "express-serve-static-core";
 import {inject, injectable} from "inversify";
-import {TYPES} from "../ioc/types";
 import {Config} from "../../common/config";
+import {TYPES} from "../../common/ioc/types";
 
 @injectable()
 export class AppInfoRoute {

@@ -2,7 +2,7 @@ import {Logger} from "../../common/logging";
 import * as express from "express";
 import {Request, Response} from "express-serve-static-core";
 import {inject, injectable} from "inversify";
-import {TYPES} from "../ioc/types";
+import {TYPES} from "../../common/ioc/types";
 import {PaymentService} from "../services/paymentService";
 import {PaymentRequest} from "../../common/models";
 

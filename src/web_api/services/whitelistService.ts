@@ -1,11 +1,12 @@
 import {inject, injectable} from "inversify";
-import {TYPES} from "../ioc/types";
+import {TYPES} from "../../common/ioc/types";
 import {WhitelistRequest} from "../../common/models";
 import {Kin} from "../../common/blockchain/kin";
 import {NetworkMismatchedError} from "@kinecosystem/kin-sdk-node";
 import {NoSuchServiceError, TransactionMismatchError} from "../../common/errors";
 import {Operation} from "@kinecosystem/kin-base";
 import {Transaction as BaseSdkTransaction} from "@kinecosystem/kin-sdk";
+import {parseMemo} from "../../common/utils";
 
 @injectable()
 export class WhitelistService {
@@ -38,13 +39,12 @@ export class WhitelistService {
         if (transaction.memo.type !== "text") {
             throw new TransactionMismatchError("Unexpected memo");
         }
-        let version, appId, paymentId;
         if (transaction.memo.value) {
-            [version, appId, paymentId] = transaction.memo.value.toString().split("-");
+            var {appId, paymentId} = parseMemo(transaction.memo.value.toString());
         }
         const op = transaction.operations[0] as Operation.Payment;
-        this.compareParams("App id", appId, request.app_id);
-        this.compareParams("Order id", paymentId, request.order_id);
+        this.compareParams("App id", appId!!, request.app_id);
+        this.compareParams("Order id", paymentId!!, request.order_id);
         this.compareParams("Source account", op.source ? op.source : transaction.source, request.source);
         this.compareParams("Destination account", op.destination, request.destination);
         this.compareParams("Amount", op.amount, request.amount.toString());
