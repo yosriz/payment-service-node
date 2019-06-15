@@ -1,7 +1,7 @@
-import { RedisDb } from "../../src/db/redisDb";
-import { createRedisClient } from "../../src/redis";
-import { Payment } from "../../src/models";
-import { OrderNotFoundError } from "../../src/errors";
+import {RedisDb} from "../../src/common/db/redisDb";
+import {createRedisClient} from "../../src/common/redis";
+import {Payment} from "../../src/common/models";
+import {OrderNotFoundError} from "../../src/common/errors";
 
 describe("RedisDb Integration", () => {
     let db: RedisDb;
