@@ -1,7 +1,7 @@
-import {Payment} from "../models";
-import {Database} from "./database";
-import {RedisAsyncClient} from "../redis";
-import {OrderNotFoundError} from "../errors";
+import { Payment } from "../models";
+import { Database } from "./database";
+import { RedisAsyncClient } from "../redis";
+import { OrderNotFoundError } from "../errors";
 
 export class RedisDb implements Database {
     private readonly PAYMENT_PREFIX = "payment:";
@@ -50,7 +50,7 @@ export class RedisDb implements Database {
         return keys.map(key => key.split(":")[1]);
     }
 
-    async getCursor(): Promise<string> {
+    async getCursor(): Promise<string | null> {
         return await this.redis.async.get(this.CURSOR_PREFIX);
     }
 

@@ -1,4 +1,4 @@
-import {Payment} from "../models";
+import { Payment } from "../models";
 
 export interface Database {
     getPayment(paymentId: string): Promise<Payment | undefined>;
@@ -17,7 +17,7 @@ export interface Database {
 
     getServicesByWatchedAddress(address: string): Promise<string[]>;
 
-    getCursor(): Promise<string>;
+    getCursor(): Promise<string | null>;
 
     saveCursor(pagingToken: string): Promise<void>;
 }

@@ -54,7 +54,7 @@ export class Kin {
         return transactions.filter(tx => tx.type == 'PaymentTransaction') as PaymentTransaction[];
     }
 
-    async getLatestPaymentTransactions(addresses: string[], cursor?: string)
+    async getLatestPaymentTransactions(addresses: string[], cursor: string | null)
         : Promise<{ payments: { tx: PaymentTransaction, watchedAddress: string }[], pagingToken?: string }> {
         const txs = await ((this.kinClient as any)._server as Server).transactions()
             .limit(100)
