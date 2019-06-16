@@ -1,8 +1,8 @@
-import {Logger} from "../common/logging";
-import {WatcherProcessor} from "./watcherProcessor";
-import {Metrics} from "../common/metrics/metrics";
-import {inject, injectable} from "inversify";
-import {TYPES} from "../common/ioc/types";
+import { Logger } from "../common/logging";
+import { WatcherProcessor } from "./watcherProcessor";
+import { Metrics } from "../common/metrics/metrics";
+import { inject, injectable } from "inversify";
+import { TYPES } from "../common/ioc/types";
 
 @injectable()
 export class WatcherApp {
@@ -30,10 +30,12 @@ export class WatcherApp {
     private async doWork() {
         try {
             await this.watcherProcessor.processPayments();
-            this.scheduleWork()
         } catch (e) {
             this.metrics.watcherBeatFailed(e);
-            this.logger.error('failed watcher iteration', e);
+            this.logger.error("failed watcher iteration", {error: e.toString()});
+        } finally {
+            this.scheduleWork();
         }
+
     }
 }

@@ -1,13 +1,14 @@
-import {inject, injectable} from "inversify";
-import {MessageBroker} from "../common/message_queue/messageBroker";
-import {Database} from "../common/db/database";
-import {Kin} from "../common/blockchain/kin";
-import {Logger} from "../common/logging";
-import {PaymentTransaction} from "@kinecosystem/kin-sdk-node";
-import {Metrics} from "../common/metrics/metrics";
-import {Payment} from "../common/models";
-import {parseMemo} from "../common/utils";
-import {TYPES} from "../common/ioc/types";
+import { inject, injectable } from "inversify";
+import { MessageBroker } from "../common/message_queue/messageBroker";
+import { Database } from "../common/db/database";
+import { Kin } from "../common/blockchain/kin";
+import { Logger } from "../common/logging";
+import { PaymentTransaction } from "@kinecosystem/kin-sdk-node";
+import { Metrics } from "../common/metrics/metrics";
+import { Payment } from "../common/models";
+import { parseMemo } from "../common/utils";
+import { TYPES } from "../common/ioc/types";
+import { performance } from "perf_hooks";
 
 @injectable()
 export class WatcherProcessor {
@@ -28,15 +29,17 @@ export class WatcherProcessor {
         const startTime = performance.now();
         const addresses = await this.db.getAllWatchedAddresses();
         const cursor = await this.db.getCursor();
-        this.logger.debug("got last cursor" + cursor);
+        this.logger.debug("got last cursor = " + cursor);
         const data = await this.kin.getLatestPaymentTransactions(addresses, cursor);
         for (const paymentData of data.payments) {
-            this.logger.info('found transaction for address = ' + paymentData.watchedAddress);
+            this.logger.info("found transaction for address = " + paymentData.watchedAddress);
             const payment = this.parsePayment(paymentData.tx);
             await this.enqueuePaymentCallback(payment, paymentData.watchedAddress);
         }
-        this.logger.debug("save last cursor = " + data.pagingToken);
-        await this.db.saveCursor(data.pagingToken!!);
+        if (data.pagingToken) {
+            this.logger.debug("save last cursor = " + data.pagingToken);
+            await this.db.saveCursor(data.pagingToken);
+        }
         this.metrics.watcherBeat(performance.now() - startTime);
         this.metrics.watcherCursor(parseInt(data.pagingToken!!));
     }

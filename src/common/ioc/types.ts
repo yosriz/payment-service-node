@@ -1,4 +1,3 @@
-import {WatcherApp} from "../../watcher/app";
 
 export const TYPES = {
     Logger: Symbol.for("Logger"),

@@ -1,4 +1,4 @@
-import {injectable} from "inversify";
+import { injectable } from "inversify";
 import {
     AccountData,
     Channels,
@@ -8,8 +8,8 @@ import {
     PaymentTransaction,
     Transaction
 } from "@kinecosystem/kin-sdk-node";
-import {Network, Server, Transaction as BaseSdkTransaction} from "@kinecosystem/kin-sdk";
-import {TransactionRetriever} from "@kinecosystem/kin-sdk-node/scripts/bin/blockchain/transactionRetriever";
+import { Network, Server, Transaction as BaseSdkTransaction } from "@kinecosystem/kin-sdk";
+import { TransactionRetriever } from "@kinecosystem/kin-sdk-node/scripts/bin/blockchain/transactionRetriever";
 
 @injectable()
 export class Kin {
@@ -56,10 +56,10 @@ export class Kin {
 
     async getLatestPaymentTransactions(addresses: string[], cursor?: string)
         : Promise<{ payments: { tx: PaymentTransaction, watchedAddress: string }[], pagingToken?: string }> {
-        let txs = await ((this.kinClient as any)._server as Server).transactions()
+        const txs = await ((this.kinClient as any)._server as Server).transactions()
             .limit(100)
             .cursor(cursor ? cursor : "now")
-            .order('desc')
+            .order("desc")
             .call();
 
         const transactions = [];
@@ -75,8 +75,8 @@ export class Kin {
                 }
                 if (address) {
                     transactions.push({tx: transaction, watchedAddress: address});
-                    pagingToken = tx.paging_token;
                 }
+                pagingToken = tx.paging_token;
             }
         }
         return {payments: transactions, pagingToken: pagingToken};
