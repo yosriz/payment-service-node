@@ -10,6 +10,8 @@
     "build": "npm-run-all clean transpile",
     "start-web": "node bin/web_api/server.js",
     "start-watcher": "node bin/watcher/watcher.js",
+    "start-worker": "node bin/worker/worker.js",
+    "create-channels": "node bin/common/blockchain/channelCreation.js",
     "transpile-tests": "tsc -p tests",
     "test": "npm-run-all transpile transpile-tests jest",
     "unit-test": "npm-run-all transpile transpile-tests jest-unit",

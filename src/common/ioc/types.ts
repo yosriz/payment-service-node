@@ -1,5 +1,3 @@
-import { WorkerApp } from "../../worker/app";
-
 export const TYPES = {
     Logger: Symbol.for("Logger"),
     Config: Symbol.for("Config"),
@@ -25,4 +23,6 @@ export const TYPES = {
     WalletCreator: Symbol.for("WalletCreator"),
     Locker: Symbol.for("Locker"),
     Axios: Symbol.for("Axios"),
+    PaymentSender: Symbol.for("PaymentSender"),
+    CallbackCaller: Symbol.for("CallbackCaller"),
 };

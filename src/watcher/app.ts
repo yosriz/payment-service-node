@@ -6,7 +6,7 @@ import { TYPES } from "../common/ioc/types";
 
 @injectable()
 export class WatcherApp {
-    private readonly WATCHER_INTERVAL_SEC = 1;
+    private readonly WATCHER_INTERVAL_MILLIS = 1000;
 
     constructor(@inject(TYPES.Logger) private readonly logger: Logger,
                 @inject(TYPES.WatcherProcessor) private readonly watcherProcessor: WatcherProcessor,
@@ -24,7 +24,7 @@ export class WatcherApp {
         setTimeout(async () => {
                 await this.doWork();
             },
-            this.WATCHER_INTERVAL_SEC);
+            this.WATCHER_INTERVAL_MILLIS);
     }
 
     private async doWork() {

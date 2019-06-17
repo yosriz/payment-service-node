@@ -24,7 +24,7 @@ export class PaymentSender {
     }
 
     public async pay(request: PaymentRequest) {
-        await this.locker.lock(`payment:${request.id}`, async () => {
+        await this.locker.lock(`lock:payment:${request.id}`, async () => {
             await this.performPay(request);
         });
     }

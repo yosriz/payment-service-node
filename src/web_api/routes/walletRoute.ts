@@ -1,9 +1,8 @@
 import * as express from "express";
-import {Request, Response} from "express-serve-static-core";
-import {inject, injectable} from "inversify";
-import {TYPES} from "../../common/ioc/types";
-import {WalletService} from "../services/walletService";
-import {CreateWalletRequest} from "../../common/models";
+import { Request, Response } from "express-serve-static-core";
+import { inject, injectable } from "inversify";
+import { TYPES } from "../../common/ioc/types";
+import { WalletService } from "../services/walletService";
 
 @injectable()
 export class WalletRoute {
@@ -12,8 +11,8 @@ export class WalletRoute {
         this.walletService = walletService;
     }
 
-    public readonly createWalletHandler: express.RequestHandler = ((req: CreateWalletRequest & Request, res: Response) => {
-        this.walletService.createWallet(req);
+    public readonly createWalletHandler: express.RequestHandler = (async (req: Request, res: Response) => {
+        await this.walletService.createWallet(req.body);
         res.status(202).send();
     }) as any as express.RequestHandler;
 

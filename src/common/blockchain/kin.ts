@@ -74,7 +74,7 @@ export class Kin {
         const txs = await ((this.kinClient as any)._server as Server).transactions()
             .limit(100)
             .cursor(cursor ? cursor : "now")
-            .order("desc")
+            .order("asc")
             .call();
 
         const transactions = [];
@@ -91,8 +91,8 @@ export class Kin {
                 if (address) {
                     transactions.push({tx: transaction, watchedAddress: address});
                 }
-                pagingToken = tx.paging_token;
             }
+            pagingToken = tx.paging_token;
         }
         return {payments: transactions, pagingToken: pagingToken};
     }

@@ -1,7 +1,7 @@
-import {RedisDb} from "../../src/common/db/redisDb";
-import {createRedisClient} from "../../src/common/redis";
-import {Payment} from "../../src/common/models";
-import {OrderNotFoundError} from "../../src/common/errors";
+import { RedisDb } from "../../src/common/db/redisDb";
+import { createRedisClient } from "../../src/common/redis";
+import { Payment } from "../../src/common/models";
+import { OrderNotFoundError } from "../../src/common/errors";
 
 describe("RedisDb Integration", () => {
     let db: RedisDb;
@@ -9,7 +9,7 @@ describe("RedisDb Integration", () => {
 
     beforeEach(() => {
         redis.flushdb();
-        db = new RedisDb(redis, 1);
+        db = new RedisDb(redis, 500);
     });
 
     afterAll(() => {
@@ -26,18 +26,18 @@ describe("RedisDb Integration", () => {
             transaction_id: "ac8689892bd9d7c0462c58f0329d4f82b5f981fdce057ab165e69dcbc43f1c54",
             app_id: "test"
         };
+        expect(await db.doesPaymentExist(payment.id)).toEqual(false);
         await db.savePayment(payment);
-
         const retrievedPayment = await db.getPayment(payment.id);
         expect(retrievedPayment).toEqual(payment);
-        expect(await db.doesPaymentExist(payment.id)).toBe(true);
+        expect(await db.doesPaymentExist(payment.id)).toEqual(true);
     });
 
     test("get and set service", async () => {
         const serviceId = "my_service";
-        expect(await db.doesServiceExists(serviceId)).not.toBe(true);
+        expect(await db.doesServiceExists(serviceId)).not.toEqual(true);
         await db.addService(serviceId, "my_callback");
-        expect(await db.doesServiceExists(serviceId)).toBe(true);
+        expect(await db.doesServiceExists(serviceId)).toEqual(true);
     });
 
     test("add and remove watcher", async () => {

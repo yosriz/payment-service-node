@@ -25,17 +25,18 @@ export class RedisMessageBroker implements MessageBroker {
     }
 
     async enqueueCreateWallet(request: CreateWalletRequest) {
-        const job = await this.queue.add(<CreateWalletJob>{request: request}, this.jobOptions);
-        this.logger.info("enqueue create wallet result" + {result: job, wallet_request: request});
+        const job = await this.queue.add(<CreateWalletJob>{type: "CreateWallet", request: request}, this.jobOptions);
+        this.logger.info("enqueue create wallet result", {result: job.name, wallet_request: request});
     }
 
     async enqueueSendPayment(request: PaymentRequest) {
-        const job = await this.queue.add(<SendPaymentJob>{request: request}, this.jobOptions);
-        this.logger.info("enqueue send payment result" + {result: job, payment_request: request});
+        const job = await this.queue.add(<SendPaymentJob>{type: "SendPayment", request: request}, this.jobOptions);
+        this.logger.info("enqueue send payment result", {result: job.name, payment_request: request});
     }
 
     async enqueuePaymentCallback(callback: string, appId: string, paymentType: "send" | "receive", payment: Payment): Promise<void> {
         const job = await this.queue.add(<PaymentCallbackJob>{
+            type: "PaymentCallback",
             request: {
                 callback: callback,
                 appId: appId,
@@ -45,7 +46,7 @@ export class RedisMessageBroker implements MessageBroker {
                 value: payment
             }
         }, this.jobOptions);
-        this.logger.info("enqueue payment callback result" + {result: job, payment: payment});
+        this.logger.info("enqueue payment callback result", {result: job.name, payment: payment});
     }
 
     registerJobProcessor(concurrency: number, processFn: ProcessCallbackFunction<WorkerJob>): void {
@@ -54,6 +55,7 @@ export class RedisMessageBroker implements MessageBroker {
 
     async enqueueWalletFailedCallback(request: CreateWalletRequest, reason: string): Promise<void> {
         const job = await this.queue.add(<WalletCreatedCallbackJob>{
+            type: "WalletCreatedCallback",
             request: {
                 callback: request.callback,
                 appId: request.app_id,
@@ -63,8 +65,8 @@ export class RedisMessageBroker implements MessageBroker {
                 value: {id: request.id, reason: reason}
             }
         }, this.jobOptions);
-        this.logger.info("enqueue create wallet callback failed" + {
-            result: job,
+        this.logger.info("enqueue create wallet callback failed", {
+            result: job.name,
             create_wallet_request: request,
             reason: reason
         });
@@ -72,6 +74,7 @@ export class RedisMessageBroker implements MessageBroker {
 
     async enqueueWalletCreatedCallback(request: CreateWalletRequest, wallet: Wallet): Promise<void> {
         const job = await this.queue.add(<WalletCreatedCallbackJob>{
+            type: "WalletCreatedCallback",
             request: {
                 callback: request.callback,
                 appId: request.app_id,
@@ -81,14 +84,15 @@ export class RedisMessageBroker implements MessageBroker {
                 value: wallet
             }
         }, this.jobOptions);
-        this.logger.info("enqueue create wallet callback success" + {
-            result: job,
+        this.logger.info("enqueue create wallet callback success", {
+            result: job.name,
             create_wallet_request: request
         });
     }
 
     async enqueuePaymentFailedCallback(request: PaymentRequest, reason: string): Promise<void> {
         const job = await this.queue.add(<PaymentCallbackJob>{
+            type: "PaymentCallback",
             request: {
                 callback: request.callback,
                 appId: request.app_id,
@@ -98,8 +102,8 @@ export class RedisMessageBroker implements MessageBroker {
                 value: {id: request.id, reason: reason}
             }
         }, this.jobOptions);
-        this.logger.info("enqueue payment callback result" + {
-            result: job,
+        this.logger.info("enqueue payment callback result", {
+            result: job.name,
             payment_request: request, reason: reason
         });
     }

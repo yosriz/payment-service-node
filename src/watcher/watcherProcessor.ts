@@ -28,6 +28,7 @@ export class WatcherProcessor {
     async processPayments() {
         const startTime = performance.now();
         const addresses = await this.db.getAllWatchedAddresses();
+        this.logger.debug("addresses to watch = " + addresses);
         const cursor = await this.db.getCursor();
         this.logger.debug("got last cursor = " + cursor);
         const data = await this.kin.getLatestPaymentTransactions(addresses, cursor);

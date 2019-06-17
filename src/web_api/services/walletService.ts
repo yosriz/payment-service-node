@@ -1,13 +1,13 @@
-import {inject, injectable} from "inversify";
-import {TYPES} from "../../common/ioc/types";
-import {Logger} from "../../common/logging";
-import {MessageBroker} from "../../common/message_queue/messageBroker";
-import {Metrics} from "../../common/metrics/metrics";
-import {Kin} from "../../common/blockchain/kin";
-import {CreateWalletRequest, Payment, Wallet} from "../../common/models";
-import {WalletNotFoundError} from "../../common/errors";
-import {KinSdkError} from "@kinecosystem/kin-sdk-node";
-import {parseMemo} from "../../common/utils";
+import { inject, injectable } from "inversify";
+import { TYPES } from "../../common/ioc/types";
+import { Logger } from "../../common/logging";
+import { MessageBroker } from "../../common/message_queue/messageBroker";
+import { Metrics } from "../../common/metrics/metrics";
+import { Kin } from "../../common/blockchain/kin";
+import { CreateWalletRequest, Payment, Wallet } from "../../common/models";
+import { WalletNotFoundError } from "../../common/errors";
+import { KinSdkError } from "@kinecosystem/kin-sdk-node";
+import { parseMemo } from "../../common/utils";
 
 @injectable()
 export class WalletService {
@@ -22,10 +22,10 @@ export class WalletService {
         this.kin = kin;
     }
 
-    createWallet(walletRequest: CreateWalletRequest) {
+    async createWallet(walletRequest: CreateWalletRequest) {
         this.metrics.walletCreationEnqueued(walletRequest.app_id);
         this.logger.info(`wallet creation request for app_id : ${walletRequest.app_id}, id : ${walletRequest.id}`);
-        this.messageBroker.enqueueCreateWallet(walletRequest);
+        await this.messageBroker.enqueueCreateWallet(walletRequest);
     }
 
     async getWallet(walletAddress: string) {
