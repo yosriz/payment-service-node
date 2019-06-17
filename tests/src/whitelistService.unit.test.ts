@@ -1,15 +1,19 @@
-import {WhitelistService} from "../../src/web_api/services/whitelistService";
-import {Kin} from "../../src/common/blockchain/kin";
-import {Environment, KinClient} from "@kinecosystem/kin-sdk-node";
-import {TransactionMismatchError} from "../../src/common/errors";
+import { WhitelistService } from "../../src/web_api/services/whitelistService";
+import { Kin } from "../../src/common/blockchain/kin";
+import { Environment, KinClient } from "@kinecosystem/kin-sdk-node";
+import { TransactionMismatchError } from "../../src/common/errors";
 
 
 describe("WhitelistService.whitelistTransaction()", () => {
     let service: WhitelistService;
+    const seed = "SCDUHIXV2KDFMGHFNINQB3VOXSKB4EYKR444OZVT72MOHFUAATFKGTZS";
 
     beforeEach(() => {
-        const kin = new Kin(new KinClient(Environment.Testnet), "SCDUHIXV2KDFMGHFNINQB3VOXSKB4EYKR444OZVT72MOHFUAATFKGTZS",
-            "test", 1, {"test": "SCDUHIXV2KDFMGHFNINQB3VOXSKB4EYKR444OZVT72MOHFUAATFKGTZS"});
+        const kin = new Kin(new KinClient(Environment.Testnet), seed,
+            "test", 1, {
+                test: {hot: seed, warm: seed}
+            },
+            seed);
         service = new WhitelistService(kin);
     });
 

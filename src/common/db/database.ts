@@ -9,6 +9,8 @@ export interface Database {
 
     addService(serviceId: string, callbackUrl: string): Promise<void>;
 
+    getService(serviceId: string): Promise<string>;
+
     addWatcher(serviceId: string, address: string, orderId: string): Promise<void>;
 
     getAllWatchedAddresses(): Promise<string[]>;
@@ -20,4 +22,6 @@ export interface Database {
     getCursor(): Promise<string | null>;
 
     saveCursor(pagingToken: string): Promise<void>;
+
+    savePayment(payment: Payment): Promise<void>;
 }

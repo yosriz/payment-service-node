@@ -4,8 +4,13 @@
   "horizon_url": "https://horizon-testnet.kininfrastructure.com/",
   "network_id": "Kin Testnet ; December 2018",
   "apps_seeds": {
-    "test": "SC3A6Y4TPZ6UTUKZRYIMIWTM7J5VEMINWZHOSKKNBXY6AUOVAXKA7PEH"
+    "test": {
+      "hot": "SC3A6Y4TPZ6UTUKZRYIMIWTM7J5VEMINWZHOSKKNBXY6AUOVAXKA7PEH",
+      "warm": "SC3A6Y4TPZ6UTUKZRYIMIWTM7J5VEMINWZHOSKKNBXY6AUOVAXKA7PEH"
+    }
   },
+  "root_wallet": "SC3A6Y4TPZ6UTUKZRYIMIWTM7J5VEMINWZHOSKKNBXY6AUOVAXKA7PEH",
+  "concurrent_jobs": 50,
   "loggers": [
     {
       "name": "console",

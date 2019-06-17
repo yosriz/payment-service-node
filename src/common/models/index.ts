@@ -33,7 +33,7 @@ export interface PaymentRequest {
 }
 
 export interface AppSeeds {
-    [appID: string]: string;
+    [appID: string]: { hot: string, warm: string };
 }
 
 export interface WhitelistRequest {
@@ -45,3 +45,51 @@ export interface WhitelistRequest {
     network_id: string;
     app_id: string;
 }
+
+export interface WorkerJob {
+    readonly type: "CreateWallet" | "SendPayment" | "PaymentCallback" | "WalletCreatedCallback";
+    request: any;
+}
+
+export interface CreateWalletJob extends WorkerJob {
+    readonly type: "CreateWallet";
+    request: CreateWalletRequest;
+}
+
+export interface SendPaymentJob extends WorkerJob {
+    readonly type: "SendPayment";
+    request: PaymentRequest;
+}
+
+export interface PaymentCallbackJob extends WorkerJob {
+    readonly type: "PaymentCallback";
+    request: PaymentCallbackRequest;
+}
+
+export interface WalletCreatedCallbackJob extends WorkerJob {
+    readonly type: "WalletCreatedCallback";
+    request: CreateWalletCallbackRequest;
+}
+
+export type PaymentCallbackRequest = {
+    callback: string,
+    appId: string,
+    readonly object: "payment";
+    state: "success" | "fail";
+    action: "send" | "receive";
+    value: Payment | CallbackFail;
+};
+
+export type CallbackFail = {
+    id: string;
+    reason: string;
+};
+
+export type CreateWalletCallbackRequest = {
+    callback: string,
+    appId: string,
+    readonly object: "wallet";
+    state: "success" | "fail";
+    readonly action: "create";
+    value: Wallet | CallbackFail;
+};

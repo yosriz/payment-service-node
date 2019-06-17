@@ -1,12 +1,12 @@
-import {inject, injectable} from "inversify";
-import {TYPES} from "../../common/ioc/types";
-import {WhitelistRequest} from "../../common/models";
-import {Kin} from "../../common/blockchain/kin";
-import {NetworkMismatchedError} from "@kinecosystem/kin-sdk-node";
-import {NoSuchServiceError, TransactionMismatchError} from "../../common/errors";
-import {Operation} from "@kinecosystem/kin-base";
-import {Transaction as BaseSdkTransaction} from "@kinecosystem/kin-sdk";
-import {parseMemo} from "../../common/utils";
+import { inject, injectable } from "inversify";
+import { TYPES } from "../../common/ioc/types";
+import { WhitelistRequest } from "../../common/models";
+import { Kin } from "../../common/blockchain/kin";
+import { NetworkMismatchedError } from "@kinecosystem/kin-sdk-node";
+import { NoSuchServiceError, TransactionMismatchError } from "../../common/errors";
+import { Operation } from "@kinecosystem/kin-base";
+import { Transaction as BaseSdkTransaction } from "@kinecosystem/kin-sdk";
+import { parseMemo } from "../../common/utils";
 
 @injectable()
 export class WhitelistService {
@@ -28,7 +28,8 @@ export class WhitelistService {
         }
         this.verifyTransaction(transaction, request);
 
-        const kinAccount = this.kin.appsAccounts.get(request.app_id);
+        const appWallets = this.kin.appsAccounts.get(request.app_id);
+        const kinAccount = appWallets!!.hot;
         if (!kinAccount) {
             throw new NoSuchServiceError(`Cant find app id: ${request.app_id}`);
         }
@@ -40,6 +41,7 @@ export class WhitelistService {
             throw new TransactionMismatchError("Unexpected memo");
         }
         if (transaction.memo.value) {
+            // tslint:disable-next-line:no-var-keyword prefer-const
             var {appId, paymentId} = parseMemo(transaction.memo.value.toString());
         }
         const op = transaction.operations[0] as Operation.Payment;

@@ -7,7 +7,6 @@ export class RedisDb implements Database {
     private readonly PAYMENT_PREFIX = "payment:";
     private readonly SERVICE_PREFIX = "service:";
     private readonly CURSOR_PREFIX = "cursor";
-
     constructor(private readonly redis: RedisAsyncClient, private readonly paymentStoreExpirationSec: number) {
         this.redis = redis;
         this.paymentStoreExpirationSec = paymentStoreExpirationSec;
@@ -28,6 +27,10 @@ export class RedisDb implements Database {
 
     async doesServiceExists(serviceId: string): Promise<boolean> {
         return await this.redis.async.exists(this.SERVICE_PREFIX + serviceId) === 1;
+    }
+
+    async getService(serviceId: string): Promise<string> {
+        return await this.redis.async.get(this.SERVICE_PREFIX + serviceId);
     }
 
     async addService(serviceId: string, callbackUrl: string): Promise<void> {

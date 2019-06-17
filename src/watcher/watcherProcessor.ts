@@ -62,7 +62,8 @@ export class WatcherProcessor {
         this.logger.info(`got payment address = ${watchedAddress}, payment = ${payment})`);
         this.metrics.paymentObserved(payment.amount, payment.app_id, watchedAddress);
         for (const serviceId of await this.db.getServicesByWatchedAddress(watchedAddress)) {
-            await this.messageBroker.enqueuePaymentCallback(serviceId, payment.sender_address == watchedAddress ? "send" : "receive", payment);
+            const callbackUrl = await this.db.getService(serviceId);
+            await this.messageBroker.enqueuePaymentCallback(callbackUrl, payment.app_id, payment.sender_address == watchedAddress ? "send" : "receive", payment);
         }
     }
 }

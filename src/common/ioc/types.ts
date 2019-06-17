@@ -1,3 +1,4 @@
+import { WorkerApp } from "../../worker/app";
 
 export const TYPES = {
     Logger: Symbol.for("Logger"),
@@ -20,4 +21,8 @@ export const TYPES = {
     WhitelistService: Symbol.for("WhitelistService"),
     WatcherApp: Symbol.for("WatcherApp"),
     WatcherProcessor: Symbol.for("WatcherProcessor"),
+    WorkerApp: Symbol.for("WorkerApp"),
+    WalletCreator: Symbol.for("WalletCreator"),
+    Locker: Symbol.for("Locker"),
+    Axios: Symbol.for("Axios"),
 };

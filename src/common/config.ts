@@ -1,5 +1,5 @@
-import {assign, path} from "./utils";
-import {LogTarget} from "./logging";
+import { assign, path } from "./utils";
+import { LogTarget } from "./logging";
 
 export interface Config {
     port?: number;
@@ -10,6 +10,8 @@ export interface Config {
     channels_salt: string;
     channels_count: number;
     apps_seeds: object;
+    concurrent_jobs: number;
+    root_wallet: string;
     loggers?: LogTarget[];
     statsd: {
         host: string;
@@ -24,6 +26,7 @@ export namespace Config {
         const config = assign({}, require(path(filePath!)), {
             app_name: process.env.APP_NAME,
             port: process.env.APP_PORT ? parseInt(process.env.APP_PORT, 10) : undefined,
+            concurrent_jobs: 50
         });
         verifyConfigParam(config.port, "port");
         verifyConfigParam(config.horizon_url, "horizon_url");

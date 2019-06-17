@@ -34,9 +34,11 @@ describe("WatcherProcessor", () => {
     test("when watched address payment, should enqueue and save cursor", async () => {
         const expectedPagingToken = "192745489589";
         const expectedServiceId = "my_service_id";
+        const expectedUrl = "my_service_url";
         mockDatabase.getCursor().returns(Promise.resolve(null));
         mockDatabase.getAllWatchedAddresses().returns(Promise.resolve([watchedAddress, watchedAddress2]));
         mockDatabase.getServicesByWatchedAddress(watchedAddress).returns(Promise.resolve([expectedServiceId]));
+        mockDatabase.getService(expectedServiceId).returns(Promise.resolve(expectedUrl));
         mockKin.getLatestPaymentTransactions(Arg.is(val => _.isEqual(val, [watchedAddress, watchedAddress2])), null)
             .returns(Promise.resolve({
                 payments: [{
@@ -61,7 +63,7 @@ describe("WatcherProcessor", () => {
         mockMetrics.received().paymentObserved(Arg.any(), Arg.any(), Arg.any());
         mockMetrics.received().watcherBeat(Arg.any());
         mockMetrics.received().watcherCursor(192745489589);
-        mockMessageBroker.received().enqueuePaymentCallback(expectedServiceId, "send", Arg.is(val => _.isEqual(val, <Payment>{
+        mockMessageBroker.received().enqueuePaymentCallback(expectedUrl, "test", "send", Arg.is(val => _.isEqual(val, <Payment>{
             id: "order_id",
             app_id: "test",
             transaction_id: "c8815d8d64cad089973f453d0cc8793824c801a13c3a77f5bcc9822d6ca362e8",
