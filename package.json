@@ -33,7 +33,7 @@
     "express-http-context": "^1.2.1",
     "hot-shots": "^6.2.0",
     "inversify": "^5.0.1",
-    "redis": "^2.8.0",
+    "redis": "^3.1.1",
     "redlock": "^4.0.0",
     "reflect-metadata": "^0.1.13",
     "winston": "^2.4.0"
